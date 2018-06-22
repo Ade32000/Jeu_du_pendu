@@ -2,7 +2,7 @@ var canvas  = document.querySelector('#canvas');
 var context = canvas.getContext('2d');
 var compteur = 0;
 var nbVies = 11;
-var mot = ['simplon','code','programmation','javascript','ordinateur', 'halloween', 'partage', 'loop'];
+var mot = ['simplon','code','programmation','javascript','ordinateur', 'halloween', 'partage', 'loop', 'fantastique','voiture','smiley','bureau','soleil','team'];
 var operation = Math.floor(Math.random() * mot.length);
 mot = mot[operation];
 var taille = mot.length;
@@ -14,6 +14,8 @@ var mot_util = "";
 $('#lettre').focus(); //focus dans l'input
 $('#lettre').val("");
 var compare = '';
+var lettres_choisies = [];
+
 // Remplace les lettres du mot caché tiré au hasard par des underscores et les stocke dans un nouveau tableau
 	for (var i = 0; i < mot.length ; i++)
 	{
@@ -43,6 +45,15 @@ var compare = '';
 			}
 			else
 			{
+
+				var choixtab = lettres_choisies.push(mot_util);
+				console.log(lettres_choisies);
+				var choixlettre = lettres_choisies[0];
+				choixlettre = choixlettre.toUpperCase();
+				console.log(choixlettre);
+
+				$( "<span>"+choixlettre+"  </span>" ).appendTo( "#choisies" );
+				lettres_choisies=[];
 
 // trouves le nombre d'occurences de la lettre tapée, et renvoie son/ses index
 				var index = [];
@@ -76,9 +87,9 @@ var compare = '';
 								$('#motcache').html(tableau_reponse);
 							}
 							
-							compare = tableau_reponse.join('');
+							compare = tableau_reponse.join('');  //transforme le tableau réponse en string afin de pouvoir le comparer au mot aléatoire
 							console.log(compare);
-							if (compare === mot2)
+							if (compare === mot2) // Lorsque le 'string' réponse est strictement identique au mot aléatoire, victoire!
 							{
 								if (compteur === 0)
 								{	
@@ -92,8 +103,7 @@ var compare = '';
 									var rejoue = confirm('Voulez-vous rejouer?');
 										if (rejoue == true)
 										{
-											document.location.reload(true);
-											// jouer();
+											$(location).reload(true);
 										}
 										else
 										{
@@ -102,7 +112,7 @@ var compare = '';
 							}
 
 					}
-					else //lettre non présente dans le mot, implémente le compteur et affiche les éléments du canvas
+					else //lettre non présente dans le mot, implémente le compteur et affiche les éléments du canvas un par un
 					{
 							compteur ++; 
 							$('#result').html("lettre non présente ! Vies restantes : " + (nbVies - compteur));
@@ -155,12 +165,12 @@ var compare = '';
 									var rejouer = confirm('Voulez-vous rejouer?');
 										if (rejouer == true)
 										{
-											document.location.reload(true);
+											$(location).reload(true);
 											// jouer();
 										}
 										else
 										{
-											document.location.reload(true);
+											$(location).reload(true);
 											alert('Vous avez choisi de quitter ce magnifique programme. Tant pis pour vous !');
 										}
 								}
@@ -307,3 +317,5 @@ brasd();
 jambeg();
 jambed();
 */
+
+$('#choisies').css({'margin-top' : '100px' , 'position' : 'absolute' , 'line-height' : '24px' , 'font-size' : '20px'});
